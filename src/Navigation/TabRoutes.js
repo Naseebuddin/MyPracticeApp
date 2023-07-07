@@ -1,13 +1,16 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import navigationStrig from '../constants/navigationStrig';
 import React from 'react';
-import { Everyday, Fwd, Home, Luxe } from '../Screens';
+import { Everyday, Home, Luxe } from '../Screens';
+import  Fwd  from "./../Screens/Fwd/Fwd";
+// import * as screens from "../Screens/index"
 import Profile from '../Screens/Profile/Profiel';
 import { Image, StyleSheet, Text } from 'react-native';
 import imagePath from '../constants/imagePath';
 import { moderateScale, scale } from 'react-native-size-matters';
 import color from '../styles/color';
-import eng from '../constants/lang/eng';
+
+import HomeStack from './HomeStack/HomeStack';
 const TabRoutes = () => {
     const Tab = createBottomTabNavigator();
     return (
@@ -25,7 +28,7 @@ const TabRoutes = () => {
                             source={focused ? imagePath.mmm : imagePath.m} />)
                     }
                 }}
-                name={navigationStrig.HOME} component={Home} />
+                name={navigationStrig.HOME} component={HomeStack} />
             <Tab.Screen
                 options={{
                     tabBarIcon: ({ focused }) => {
@@ -54,11 +57,11 @@ const TabRoutes = () => {
             <Tab.Screen
                 options={{
                     tabBarIcon: ({ focused }) => {
-                        return(
-                        <Image 
-                        resizeMode='stretch'
-                        style={{ ...styles.iconeStyle, tintColor: focused ? color.mREd : color.darkBlack }}
-                            source={imagePath.user} />
+                        return (
+                            <Image
+                                resizeMode='stretch'
+                                style={{ ...styles.iconeStyle, tintColor: focused ? color.mREd : color.darkBlack }}
+                                source={imagePath.user} />
                         )
                     }
                 }}

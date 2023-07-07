@@ -6,5 +6,11 @@ export default {
     LUXE:'Luxe',
     PROFILE:'Profile',
     EVERYDAY:'Everyday',
+    SEARCH:'Search',
+    BASEKET:'Baseket',
+    WESHLIST:'Weshlist',
+    NOTIFICATIONS:'Notifications',
+    HOMESTACK:'Homestack',
+    
   };
   
