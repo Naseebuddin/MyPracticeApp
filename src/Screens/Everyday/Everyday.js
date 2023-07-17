@@ -15,12 +15,14 @@ import { increment } from "../../redux/reducer/myCountItem";
 import { incrementCartItemQuantity } from "../../redux/reducer/mycartItem";
 const Everyday = ({ navigation }) => {
 
+    
     const carTItem = useSelector((state) => state.cartItem)
 
     const dispatch = useDispatch();
     const calltoAddTheItem = (item, index) => {
+        // dispatch(incrementCartItemQuantity(item.id))
         actions.clickTOAddItemTocart(item, index);
-        dispatch(incrementCartItemQuantity(item.id))
+      
     }
     const DATA = [
         {
@@ -69,7 +71,6 @@ const Everyday = ({ navigation }) => {
             myImage: imagePath.womens
         },
     ]
-
     const dataOfDealsOfTheDay = [
         {
             id: 1,
@@ -81,8 +82,10 @@ const Everyday = ({ navigation }) => {
             sold: eng.SOLDBY1,
             peopleView: eng.PEOPLESEEN,
             return: eng.DAYSRETURN,
-            size: 7,
-            quantity: 0,
+            size: 0,
+            quantity: 1,
+            amount: 0,
+            // grandTotal:0,
         },
         {
             id: 2,
@@ -94,9 +97,10 @@ const Everyday = ({ navigation }) => {
             sold: eng.SOLDBY1,
             peopleView: eng.PEOPLESEEN,
             return: eng.DAYSRETURN,
-            size: 8,
-            quantity: 0,
-            amount:0,
+            size: 0,
+            quantity: 1,
+            amount: 0,
+            // grandTotal:0,
 
         },
         {
@@ -109,9 +113,10 @@ const Everyday = ({ navigation }) => {
             sold: eng.SOLDBY1,
             peopleView: eng.PEOPLESEEN,
             return: eng.DAYSRETURN,
-            size: 8,
-            quantity: 0,
-            amount:0,
+            size: 0,
+            quantity: 1,
+            amount: 0,
+            // grandTotal:0,
         },
         {
             id: 4,
@@ -123,9 +128,10 @@ const Everyday = ({ navigation }) => {
             sold: eng.SOLDBY1,
             peopleView: eng.PEOPLESEEN,
             return: eng.DAYSRETURN,
-            size: 9,
-            quantity: 0,
-            amount:0,
+            size: 0,
+            quantity: 1,
+            amount: 0,
+            // grandTotal:0,
 
         },
         {
@@ -138,9 +144,10 @@ const Everyday = ({ navigation }) => {
             sold: eng.SOLDBY1,
             peopleView: eng.PEOPLESEEN,
             return: eng.DAYSRETURN,
-            size: 8,
-            quantity: 0,
-            amount:0,
+            size: 0,
+            quantity: 1,
+            amount: 0,
+            // grandTotal:0,
 
         },
         {
@@ -153,9 +160,10 @@ const Everyday = ({ navigation }) => {
             sold: eng.SOLDBY2,
             peopleView: eng.PEOPLESEEN,
             return: eng.DAYSRETURN,
-            size: 8,
-            quantity: 0,
-            amount:0,
+            size: 0,
+            quantity: 1,
+            amount: 0,
+            // grandTotal:0,
 
         },
         {
@@ -168,9 +176,10 @@ const Everyday = ({ navigation }) => {
             sold: eng.SOLDBY2,
             peopleView: eng.PEOPLESEEN,
             return: eng.DAYSRETURN,
-            size: 10,
-            quantity: 0,
-            amount:0,
+            size: 0,
+            quantity: 1,
+            amount: 0,
+            // grandTotal:0,
         },
         {
             id: 8,
@@ -182,9 +191,10 @@ const Everyday = ({ navigation }) => {
             sold: eng.SOLDBY2,
             peopleView: eng.PEOPLESEEN,
             return: eng.DAYSRETURN,
-            size: 9,
-            quantity: 0,
-             amount:0,
+            size: 0,
+            quantity: 1,
+            amount: 0,
+            // grandTotal:0,
 
         }
     ]
@@ -220,10 +230,7 @@ const Everyday = ({ navigation }) => {
             myColor: color.black
         }
     ]
-
     const [isSelectItem, setIsSelectItem] = useState({ selectItemData })
-
-
     const myselectItemData = (id) => {
         let copyArray = selectItemData.map((value) => {
             if (value.id == id) {
@@ -300,7 +307,7 @@ const Everyday = ({ navigation }) => {
     const renderItemOfDataOFBestSeller = useCallback(({ item, index }) => {
         return (
             <View style={styles.flatlistViewOFBestSelllerStyle}>
-                <TouchableOpacity onPress={() => actions.clickTOAddItemTocart(item, index)}>
+                <TouchableOpacity onPress={() => calltoAddTheItem(item, index)}>
                     <ImageBackground
                         resizeMode="stretch" style={styles.flatlistImageOfBestSellerStyle}
                         source={item.dealImage} >
@@ -334,7 +341,6 @@ const Everyday = ({ navigation }) => {
 
 
     const saveCartData = useSelector((state) => state.counter)
-    console.log('savetoCarData', saveCartData);
     return (
         <SafeAreaView style={styles.mainView}>
             <View style={styles.mainView}>

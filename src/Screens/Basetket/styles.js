@@ -64,12 +64,14 @@ export default StyleSheet.create({
     itemSelectTextHeaderStyle: {
         fontSize: moderateScale(14),
         marginVertical: moderateScale(5),
-        marginHorizontal: moderateScale(12)
+        marginHorizontal: moderateScale(1)
     },
     ietmsSelectViewStyle: {
         flexDirection: 'row',
-        alignSelf: 'center',
-        marginTop: moderateScale(5)
+        // alignSelf: 'center',
+        justifyContent:'space-between',
+        marginTop: moderateScale(5),
+        marginHorizontal:moderateScale(5)
     },
     ietmsQtyandSizeViewStyle: {
         flexDirection: 'row',
@@ -126,6 +128,7 @@ export default StyleSheet.create({
         color: color.black,
         fontWeight: '400',
         fontSize: moderateScale(14),
+        marginTop:moderateScale(5)
     },
 
 
@@ -210,6 +213,17 @@ export default StyleSheet.create({
         marginHorizontal: moderateScale(8),
         borderRadius: moderateScale(4)
     },
+
+DoneButtonStyle: {
+    marginTop: moderateScale(20),
+    height: verticalScale(38),
+    // width: scale(190),
+    backgroundColor: color.profileButtonColor,
+    alignItems: 'center',
+    // paddingHorizontal: moderateScale(65),
+    // marginHorizontal: moderateScale(0),
+    borderRadius: moderateScale(1)
+},
     counterTextStyle: {
         color: color.black,
         alignSelf: 'center',
@@ -230,20 +244,41 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: moderateScale(25),
         alignItems: 'center',
+        
    
     },
     actionSheetSelectQuantityViewStyle: {
         flexDirection: 'row',
-        // alignSelf: 'center',
         justifyContent:'space-between',
-        backgroundColor:color.GreenMix,
         width:'100%',
-        paddingHorizontal:moderateScale(14),
-    
+        paddingHorizontal:moderateScale(6),
     },
     actionSheetSelectquantityTextStyle: {
         fontSize: moderateScale(15),
-        fontWeight: 'bold',
+        fontWeight: '400',
+    },
+    selectingNumberBtnStyle:{
+   borderWidth:moderateScale(.5),
+   height:verticalScale(40),
+   width: scale(40),
+   alignItems:'center',
+   justifyContent:'center',
+   borderRadius:moderateScale(22),
+   marginHorizontal:moderateScale(8),
+   marginTop:moderateScale(15),
+
+
+    },
+    selectingNoQuantityView:{
+        
+    },
+    SzieSelectTextStyle: {
+        fontWeight: '600',
+        fontSize:moderateScale(14)
+    
+    
+      
+       
     },
 
 })

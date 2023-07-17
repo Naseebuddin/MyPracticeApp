@@ -57,7 +57,7 @@ export default {
   HOTTEST: 'HOTTEST TRANDS',
   STARTING: 'STARTING',
   FULLPRICE: '$1199',
-  PRICE: '$699',
+  PRICE: 699,
   MYFASHIOn: 'MyFashionGPT',
   USEAI: 'Use AI to find new looks or styles',
   NEW: 'New',
@@ -124,6 +124,9 @@ SOLDBY:'Sold by',
 SIZE:'Size',
 QTY:'Qty',
 SELECTQUANTITY:'Select Quantity',
+SELECTSIZE:'Select Size',
+DONE:'Done',
+
 
   
 

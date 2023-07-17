@@ -40,6 +40,7 @@ export default StyleSheet.create({
         marginHorizontal: moderateScale(12)
 
     },
+
     logigSighnupTextStyle: {
         color: color.white,
         fontSize: moderateScale(12),

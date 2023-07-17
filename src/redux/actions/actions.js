@@ -1,6 +1,6 @@
 import { deleteUserData, toggleTodo, userData } from "../reducer/counterReducerSlice";
 import { decrement, increment } from "../reducer/myCountItem";
-import { addItemToCart, clearCart, deletTheCartItem } from "../reducer/mycartItem";
+import { GrandTotal, addItemToCart, clearCart, deletTheCartItem } from "../reducer/mycartItem";
 import store from "../store";
 const { dispatch } = store;
 const addMyActionUserData = (state) => {
@@ -18,10 +18,14 @@ const clickToDeleltItemOfCart = (state) => {
 const clearMyAllCartItem = (state) =>{
     dispatch(clearCart(state))
 }
+const grandTotalOFAllItem = (state)=>{
+    dispatch(GrandTotal(state));
+}
 export default {
     addMyActionUserData,
     deleteMyActionUserData,
     clickToDeleltItemOfCart,
     clickTOAddItemTocart,
     clearMyAllCartItem,
+    grandTotalOFAllItem
 }

@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useState } from "react";
-import { Text, View, SafeAreaView, FlatList, Image, TouchableOpacity } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Text, View, SafeAreaView, FlatList, Image, TouchableOpacity, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles";
 import actions from "../../redux/actions/actions";
@@ -9,72 +9,168 @@ import eng from "../../constants/lang/eng";
 import ActionSheet from "react-native-actions-sheet";
 import HeaderComponent from "../../Components/HeaderComponent";
 import imagePath from "../../constants/imagePath";
-import { incrementByAmountCartItem, incrementCartItemQuantity } from "../../redux/reducer/mycartItem";
+import { IncrementItemSize, incrementByAmountCartItem, incrementByAmountOfSize, incrementCartItemQuantity } from "../../redux/reducer/mycartItem";
 const Baseket = ({ navigation }) => {
-    const [incrementbyAmount, setIncrementbyAmount] = useState('');
     const [selectedProduct, setSelectedProduct] = useState({})
-    console.log(selectedProduct, 'myProduct')
-    const IncrementData = [{
-        id: 1,
-        amount: 1,
-    },
-    {
-        id: 2,
-        amount: 2,
-    },
-    {
-        id: 3,
-        amount: 3,
-    },
-    {
-        id: 4,
-        amount: 4,
-    },
-    {
-        id: 5,
-        amount: 5,
-    },
-    {
-        id: 6,
-        amount: 6,
-    },
-    {
-        id: 7,
-        amount: 7,
-    },
-    {
-        id: 8,
-        amount: 8,
-    },
-    {
-        id: 9,
-        amount: 19,
-    },
-    ]
+    const [selectedProductOfSzie, setSelectedProductOfSize] = useState({})
+    const [isChecked, setIschecked] = useState('');
+    const cartSelectdata = useSelector((state) => state.cartItem.cartItems);
+    let grandTotalAmount = useSelector((state) => state.cartItem.toThegrandTotal)
+    console.log(grandTotalAmount, 'grandTotalAmountgrandTotalAmountgrandTotalAmount');
     const actionSheetRef = useRef(null);
     const actionClose = () => {
         actionSheetRef.current?.hide()
     }
-    const cartSelectdata = useSelector((state) => state.cartItem.cartItems)
-    // const itemQuantity = useSelector((state) => state.cartItem.cartItems)
-    // const item = itemQuantity.find((val) => val)
-    // // console.log(item.quantity, '<<<<<quantity');
     const deleltTheCartItem = (itemTodelet) => {
-        actions.clickToDeleltItemOfCart(itemTodelet)
+        actions.clickToDeleltItemOfCart(itemTodelet);
+
+        Alert.alert('Selected Item remove it.')
+        console.log(itemTodelet,'>>>>>>>');
+        grandTotalAmount =  itemTodelet; 
     }
     const clearAllThecartItemFromStore = () => {
-        actions.clearMyAllCartItem()
+        actions.clearMyAllCartItem();
+        Alert.alert('All Item removed from cart')
     }
     const dispatch = useDispatch();
+
     const incrementtheItem = (item, index) => {
-        console.log(item, "itemitemitemitemitemitem +++++++++++++");
         dispatch(incrementByAmountCartItem(item))
+    }
+    const incrementSizeOfTheItem = (item) => {
+        dispatch(incrementByAmountOfSize(item))
     }
     const _onSelectProductForUpdate = (item) => {
         setSelectedProduct(item)
-
         actionSheetRef.current?.show()
+        setIschecked(true)
     }
+    const _onSelectProductForUpdateSize = (item) => {
+        setSelectedProductOfSize(item)
+        actionSheetRef.current?.show()
+        setIschecked(false)
+    }
+    const IncrementData = [{
+        id: 1,
+        qty: 1,
+        size: 4,
+        myBoderColor: color.black
+
+    },
+    {
+        id: 2,
+        qty: 2,
+        size: 5,
+        myBoderColor: color.black
+
+    },
+    {
+        id: 3,
+        qty: 3,
+        size: 6,
+        myBoderColor: color.black
+
+    },
+    {
+        id: 4,
+        qty: 4,
+        size: 7,
+        myBoderColor: color.black
+
+    },
+    {
+        id: 5,
+        qty: 5,
+        size: 8,
+        myBoderColor: color.black
+
+    },
+    {
+        id: 6,
+        qty: 6,
+        size: 9,
+        myBoderColor: color.black
+
+    },
+    {
+        id: 7,
+        qty: 7,
+        size: 10,
+        myBoderColor: color.black
+
+    },
+    {
+        id: 8,
+        qty: 8,
+        size: 11,
+        myBoderColor: color.black
+
+    },
+    {
+        id: 9,
+        qty: 19,
+        size: 12,
+        myBoderColor: color.black
+    },
+    ];
+    const dataOfIncrementSize = [
+
+        {
+            id: 1,
+            size: 4,
+            myBoderColor: color.black
+
+        },
+        {
+            id: 2,
+            size: 5,
+            myBoderColor: color.black
+
+        },
+        {
+            id: 3,
+            size: 6,
+            myBoderColor: color.black
+
+        },
+        {
+            id: 4,
+            size: 7,
+            myBoderColor: color.black
+
+        },
+        {
+            id: 5,
+            size: 8,
+            myBoderColor: color.black
+
+        },
+        {
+            id: 6,
+            size: 9,
+            myBoderColor: color.black
+
+        },
+        {
+            id: 7,
+            size: 10,
+            myBoderColor: color.black
+
+        },
+        {
+            id: 8,
+            size: 11,
+            myBoderColor: color.black
+
+        },
+        {
+            id: 9,
+            size: 12,
+            myBoderColor: color.black
+        },
+
+
+    ]
     const renderItemOfDataOfDealsOfTheDay = useCallback(({ item, index }) => {
         return (
             <View style={styles.flatlistViewOFdealsOfDay}>
@@ -90,25 +186,39 @@ const Baseket = ({ navigation }) => {
                     <Text>{eng.SOLDBY}: {item.sold}</Text>
                     <Text style={styles.flatlistDealOfDayTextPriceStyle}>{item.peopleView}</Text>
                     <View style={styles.ietmsQtyandSizeViewStyle}>
-                        <Text style={styles.qtyTextStyle} >{eng.SIZE}: {item.size} ▾</Text>
-                        <Text style={styles.qtyTextStyle}
-                            // onPress={() => {incrementtheItem(item,index)}}
-                            onPress={() => _onSelectProductForUpdate(item)}
+                        <TouchableOpacity onPress={() => _onSelectProductForUpdateSize(item)}>
+                            <Text style={styles.qtyTextStyle} >
+                                {eng.SIZE}: {item.size} ▾</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.qtyTextStyle} onPress={() => _onSelectProductForUpdate(item)}
                         >{eng.QTY}: {item.quantity} ▾</Text>
                     </View>
-                    <Text style={styles.flatlistDealOfDayTextPriceStyle}>{item.cost}</Text>
-                    <Text> ↻ 12 {item.return}</Text>
+                    <Text style={styles.flatlistDealOfDayTextPriceStyle}> ₹ {item.cost}</Text>
+                    <Text style={styles.flatlistDealOfDayTextPriceStyle}> ↻ 12 {item.return}</Text>
                 </View>
             </View>
         )
     }, [cartSelectdata]);
     const renderItemOfIncrementData = useCallback(({ item, index }) => {
         return (
-            <View>
-                <Text onPress={() => incrementtheItem({ ...selectedProduct, selectedQuantity: item.amount })}>{item.amount}</Text>
+            <View style={styles.selectingNoQuantityView}>
+                <TouchableOpacity style={styles.selectingNumberBtnStyle} onPress={() => {
+                    incrementtheItem({ ...selectedProduct, selectedQuantity: item.qty })
+                }} >
+                    <Text style={styles.SzieSelectTextStyle}>{item.qty}</Text>
+                </TouchableOpacity>
             </View>
         )
     }, [IncrementData])
+    const renderItemOfIncrementSize = useCallback(({ item }) => {
+        return (
+            <View style={styles.selectingNoQuantityView}>
+                <TouchableOpacity style={styles.selectingNumberBtnStyle} onPress={() => { incrementSizeOfTheItem({ ...selectedProductOfSzie, selectedSzie: item.size }) }}>
+                    <Text style={styles.SzieSelectTextStyle}> {item.size}</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }, [dataOfIncrementSize])
     return (
         <SafeAreaView style={styles.mainView}>
             <View style={styles.mainView}>
@@ -123,7 +233,7 @@ const Baseket = ({ navigation }) => {
                 />
                 <View style={styles.itemView}>
                     <View style={styles.ietmsSelectViewStyle}>
-                        <Text style={styles.itemSelectTextHeaderStyle}>{cartSelectdata.length}/{cartSelectdata.length} {eng.ITEMISSELECTED}</Text>
+                        <Text style={styles.itemSelectTextHeaderStyle}>{cartSelectdata.length}/{cartSelectdata.length}{eng.ITEMISSELECTED} ({grandTotalAmount})</Text>
                         <TouchableOpacity onPress={() => clearAllThecartItemFromStore()}>
                             <Image source={imagePath.delet} />
                         </TouchableOpacity>
@@ -151,18 +261,40 @@ const Baseket = ({ navigation }) => {
                     ref={actionSheetRef} >
                     <View style={styles.actionSheetViewStyle}>
                         <View style={styles.actionSheetSelectQuantityViewStyle}>
-                            <Text style={styles.actionSheetSelectquantityTextStyle} >{eng.SELECTQUANTITY}</Text>
-                            <TouchableOpacity>
+                            {isChecked ? (
+                                <Text style={styles.actionSheetSelectquantityTextStyle} > {eng.SELECTQUANTITY}</Text>) :
+                                (
+                                    <Text style={styles.actionSheetSelectquantityTextStyle}>{eng.SELECTSIZE}</Text>
+                                )
+                            }
+                            <TouchableOpacity onPress={() => actionClose()}>
                                 <Text> X</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <Text>working</Text>
-                    <FlatList
-                        keyExtractor={item => item.id}
-                        data={IncrementData}
-                        renderItem={renderItemOfIncrementData}
-                    />
+                    {isChecked ? (
+                        <FlatList
+                            showsHorizontalScrollIndicator={false}
+                            horizontal
+                            keyExtractor={item => item.id}
+                            data={IncrementData}
+                            renderItem={renderItemOfIncrementData}
+                        />) : (
+                        <FlatList
+                            showsHorizontalScrollIndicator={false}
+                            horizontal
+                            keyExtractor={item => item.id}
+                            data={dataOfIncrementSize}
+                            renderItem={renderItemOfIncrementSize}
+                        />
+                    )}
+                    <ButtonWithLabel
+                        onPress={() => { }}
+                        btnBackgroundColor={color.profileButtonColor}
+                        textColor={color.white}
+                        buttonStyle={styles.DoneButtonStyle}
+                        btnTextStyle={styles.logigSighnupTextStyle}
+                        buttonTextLabel={eng.DONE} />
                     {/* <TouchableOpacity onPress={()=> {incrementtheItem(item)}}>
                                 <Text>click</Text>
                             </TouchableOpacity> */}

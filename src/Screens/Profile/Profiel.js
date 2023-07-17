@@ -32,7 +32,9 @@ const Profile = () => {
                             }}
                             btnBackgroundColor={color.profileButtonColor}
                             textColor={color.white}
-                            buttonStyle={styles.logigSighnupStyle} btnTextStyle={styles.logigSighnupTextStyle} buttonTextLabel={eng.LOGINSIGNUP} />
+                            buttonStyle={styles.logigSighnupStyle} 
+                            btnTextStyle={styles.logigSighnupTextStyle}
+                             buttonTextLabel={eng.LOGINSIGNUP} />
 
                     </View>
                     <View>
