@@ -9,9 +9,12 @@ import ButtonWithLabel from "../../Components/ButtonWithLabel";
 import color from "../../styles/color";
 import { moderateScale } from "react-native-size-matters";
 import HimAndHerBotton from "../../Components/HimAndHerBotton";
+import actionsOfApis from "../../redux/actions/actionsOfApis";
+import { Addproducts } from "../index";
+import navigationStrig from "../../constants/navigationStrig";
 export const slider_Width = Dimensions.get('window').width + 5;
 export const ITEM_Width = Math.round(slider_Width * 1);
-const Fwd = () => {
+const Fwd = ({ navigation }) => {
     const [millySecond, setMillySecond] = useState(1500);
     const [myTxtOfBeautyColor, setMyTxtOfBeautyColor] = useState();
     const [myTxtColor, setMyTextColor] = useState();
@@ -20,7 +23,55 @@ const Fwd = () => {
     const isCarousel = useRef(null);
     const [index, setIndex] = useState(0);
     const [myBackgroundColorOfBeauty, setMyBackgroundColorOfBeauty] = useState();
-
+    const [apiData, setApiData] = useState(apiData);
+    const [copyId, setCopyId] = useState();
+    const Get_Products_ALL = async () => {
+        await actionsOfApis.getActionsProductsApi().then((res) => {
+            setApiData(res)
+            // console.log(apiData,'ALL PRODUCTS=>>');
+        }).catch((error) => {
+            // console.log(error, 'error');
+        })
+    };
+    const Get_Products_Jewelery = async () => {
+        await actionsOfApis.getActionProductCategoriesOfJewelery().then((res) => {
+            setApiData(res);
+            // console.log(apiData,'ALL JEWELERY=>>');
+        }).catch((error) => {
+            // console.log(error, 'error')
+        })
+    }
+    const Get_Products_Electronic = async () => {
+        await actionsOfApis.getActionProductCategoriesOfElectronics().then((res) => {
+            setApiData(res)
+            // console.log(apiData,'ALL ELECTRONICS=>>>');
+        }).catch((error) => {
+            // console.log(error, 'error');
+        })
+    };
+    const Get_Products_WOMEN = async () => {
+        await actionsOfApis.getActionProductCategoriesOfWomen().then((res) => {
+            setApiData(res);
+            // console.log(apiData,'ALL WOMENS=>>>');
+        }).catch((error) => {
+            console.log((error, 'error'));
+        })
+    };
+    const Get_Products_Man = async () => {
+        await actionsOfApis.getActionProductCategoriesOfMan().then((res) => {
+            setApiData(res)
+            // console.log(apiData,'ALL MANS=>>>>');
+        }).catch((error) => {
+            // console.log(error, 'error');
+        })
+    }
+    useEffect(() => {
+        Get_Products_ALL();
+        Get_Products_Jewelery();
+        Get_Products_Electronic();
+        Get_Products_Man();
+        Get_Products_WOMEN();
+    }, [])
     const buttonState = () => {
         if (state == true) {
             setMyTextColor(color.black);
@@ -122,33 +173,31 @@ const Fwd = () => {
         {
             id: 1,
             item: eng.ALL,
-            myColor: color.black
+            myColor: color.black,
+
         },
         {
             id: 2,
-            item: eng.JEANS,
-            myColor: color.black
+            item: eng.JEWELLERY,
+            myColor: color.black,
+
         },
         {
             id: 3,
-            item: eng.DRESSES,
+            item: eng.WOMENS,
             myColor: color.black
         },
         {
             id: 4,
-            item: eng.COORDER,
+            item: eng.ELECTRONIC,
             myColor: color.black
         },
         {
             id: 5,
-            item: eng.TROUSERS,
+            item: eng.MANS,
             myColor: color.black
         }
-        , {
-            id: 6,
-            item: eng.JUMSUITE,
-            myColor: color.black
-        }
+        ,
     ]
     const DATA = [
         {
@@ -187,6 +236,31 @@ const Fwd = () => {
             myImage: imagePath.jewellery
         },
 
+    ]
+    const carouselData = [{
+        id: 1,
+        url: imagePath.zara1,
+    },
+    {
+        id: 2,
+        url: imagePath.zara2,
+    },
+    {
+        id: 3,
+        url: imagePath.zara3,
+    },
+    {
+        id: 4,
+        url: imagePath.zara4,
+    },
+    {
+        id: 5,
+        url: imagePath.zara5,
+    },
+    {
+        id: 6,
+        url: imagePath.zara6,
+    }
     ]
     const renderDataItemProducts = useCallback(({ item, index }) => {
         return (
@@ -277,37 +351,12 @@ const Fwd = () => {
     const renderDataOfSelectItem = useCallback(({ item, index }) => {
         return (
             <View>
-                <TouchableOpacity onPress={() => myselectItemData(item.id)}>
+                <TouchableOpacity onPress={() => { myselectItemData(item.id), chnageCategories(item.id) }}>
                     <Text style={{ ...styles.flatlistTextOfSelectitem, borderColor: item.myColor, color: item.myColor }}>{item.item}</Text>
                 </TouchableOpacity>
             </View>
         )
     }, [isSelectItem.selectItemData]);
-    const carouselData = [{
-        id: 1,
-        url: imagePath.zara1,
-    },
-    {
-        id: 2,
-        url: imagePath.zara2,
-    },
-    {
-        id: 3,
-        url: imagePath.zara3,
-    },
-    {
-        id: 4,
-        url: imagePath.zara4,
-    },
-    {
-        id: 5,
-        url: imagePath.zara5,
-    },
-    {
-        id: 6,
-        url: imagePath.zara6,
-    }
-    ]
     const renderItem = ({ item }) => {
         return (
             <View style={styles.carouselView}>
@@ -321,23 +370,24 @@ const Fwd = () => {
             </View>
         )
     }
-    useEffect(() => {
-        {
-            if (millySecond > 1250) {
-                const interval = setInterval(() => {
-                    setMillySecond(millySecond => millySecond - 50)
-                }, 100)
-                return () => clearInterval(interval)
-            }
-            if (millySecond == 1250) {
-                setMillySecond(1500)
-            }
-        }
-    }, [millySecond]);
-
+    // useEffect(() => {
+    //     {
+    //         if (millySecond > 1250) {
+    //             const interval = setInterval(() => {
+    //                 setMillySecond(millySecond => millySecond - 50)
+    //             }, 100)
+    //             return () => clearInterval(interval)
+    //         }
+    //         if (millySecond == 1250) {
+    //             setMillySecond(1500)
+    //         }
+    //     }
+    // }, [millySecond]);
     const myselectItemData = (id) => {
         let copyArray = selectItemData.map((value) => {
             if (value.id == id) {
+                setCopyId(value.id)
+
                 return { ...value, myColor: color.mREd }
             }
             else {
@@ -352,15 +402,38 @@ const Fwd = () => {
                 <TouchableOpacity>
                     <Image
                         imageStyle={{ borderRadius: moderateScale(1) }}
-                        resizeMode="stretch" style={styles.flatlisimageStyleOfSelectItem} source={item.myImage} />
-                    <Text style={styles.flatlistTextOfSelectItem}>{item.name}</Text>
+                        resizeMode="stretch" style={styles.flatlisimageStyleOfSelectItem} source={{ uri: item.image }} />
+                    <Text style={styles.flatlistTextOfSelectItem}>{item.title.substring(0, 15)}</Text>
                     <Text style={styles.flatlistTextOfSelectItem}>{item.printedDress}</Text>
                     <Text style={styles.flatlistTextOfSelectItemPric}>{item.price}</Text>
 
                 </TouchableOpacity>
             </View>
         )
-    }, [dataOfZara]);
+    }, [apiData]);
+    const chnageCategories = (id) => {
+
+        if (id == 1) {
+            Get_Products_ALL();
+            return
+        };
+        if (id == 2) {
+            Get_Products_Jewelery();
+            return
+        };
+        if (id == 3) {
+            Get_Products_WOMEN();
+            return
+        };
+        if (id == 4) {
+            Get_Products_Electronic();
+            return
+        };
+        if (id == 5) {
+            Get_Products_Man();
+            return
+        };
+    }
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View>
@@ -515,15 +588,16 @@ const Fwd = () => {
                             scrollEnabled={false}
                             keyExtractor={item => item.id}
                             showsHorizontalScrollIndicator={false}
-                            data={dataOfZara.slice(1, 6)}
+                            data={apiData}
                             renderItem={renderDataOfSelectTheItems}
                         />
 
                         <ButtonWithLabel
+                            onPress={() => navigation.navigate(navigationStrig.ADDPRODUCTS)}
                             btnBackgroundColor={color.btndarkColor}
                             buttonStyle={styles.ViewMoreButtonStyle}
                             textColor={color.white}
-                            buttonTextLabel={eng.VIEWMORE}
+                            buttonTextLabel={eng.ADDTHEPRODUCTS}
                             btnTextStyle={styles.viewMoreTextStyle}
                         />
                     </View>

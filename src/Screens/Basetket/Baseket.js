@@ -10,13 +10,14 @@ import ActionSheet from "react-native-actions-sheet";
 import HeaderComponent from "../../Components/HeaderComponent";
 import imagePath from "../../constants/imagePath";
 import { IncrementItemSize, incrementByAmountCartItem, incrementByAmountOfSize, incrementCartItemQuantity } from "../../redux/reducer/mycartItem";
+import navigationStrig from "../../constants/navigationStrig";
 const Baseket = ({ navigation }) => {
     const [selectedProduct, setSelectedProduct] = useState({})
     const [selectedProductOfSzie, setSelectedProductOfSize] = useState({})
     const [isChecked, setIschecked] = useState('');
     const cartSelectdata = useSelector((state) => state.cartItem.cartItems);
     let grandTotalAmount = useSelector((state) => state.cartItem.toThegrandTotal)
-    console.log(grandTotalAmount, 'grandTotalAmountgrandTotalAmountgrandTotalAmount');
+    // console.log(grandTotalAmount, 'grandTotalAmountgrandTotalAmountgrandTotalAmount');
     const actionSheetRef = useRef(null);
     const actionClose = () => {
         actionSheetRef.current?.hide()
@@ -25,7 +26,7 @@ const Baseket = ({ navigation }) => {
         actions.clickToDeleltItemOfCart(itemTodelet);
 
         Alert.alert('Selected Item remove it.')
-        console.log(itemTodelet,'>>>>>>>');
+        // console.log(itemTodelet,'>>>>>>>');
         grandTotalAmount =  itemTodelet; 
     }
     const clearAllThecartItemFromStore = () => {
@@ -193,7 +194,7 @@ const Baseket = ({ navigation }) => {
                         <Text style={styles.qtyTextStyle} onPress={() => _onSelectProductForUpdate(item)}
                         >{eng.QTY}: {item.quantity} ▾</Text>
                     </View>
-                    <Text style={styles.flatlistDealOfDayTextPriceStyle}> ₹ {item.cost}</Text>
+                    <Text style={styles.flatlistDealOfDayTextPriceStyle}> ₹ {item.cost * item.quantity}</Text>
                     <Text style={styles.flatlistDealOfDayTextPriceStyle}> ↻ 12 {item.return}</Text>
                 </View>
             </View>
@@ -233,7 +234,7 @@ const Baseket = ({ navigation }) => {
                 />
                 <View style={styles.itemView}>
                     <View style={styles.ietmsSelectViewStyle}>
-                        <Text style={styles.itemSelectTextHeaderStyle}>{cartSelectdata.length}/{cartSelectdata.length}{eng.ITEMISSELECTED} ({grandTotalAmount})</Text>
+                        <Text style={styles.itemSelectTextHeaderStyle}>{cartSelectdata.length}/{cartSelectdata.length}{eng.ITEMISSELECTED} ({grandTotalAmount}) </Text>
                         <TouchableOpacity onPress={() => clearAllThecartItemFromStore()}>
                             <Image source={imagePath.delet} />
                         </TouchableOpacity>
@@ -250,6 +251,7 @@ const Baseket = ({ navigation }) => {
                         <Text style={styles.counterTextStyle}>{cartSelectdata.length} {eng.ITEMISSELECTED}</Text>
                     </View>
                     <ButtonWithLabel
+                    onPress={()=> navigation.navigate(navigationStrig.ORDERTOCONTINUE)}
                         btnBackgroundColor={color.profileButtonColor}
                         textColor={color.white}
                         buttonStyle={styles.continueButtonStyle}
@@ -288,8 +290,11 @@ const Baseket = ({ navigation }) => {
                             renderItem={renderItemOfIncrementSize}
                         />
                     )}
+                 
                     <ButtonWithLabel
-                        onPress={() => { }}
+                     onPress={() => {
+                       Alert.alert('ssssss')
+                    }}
                         btnBackgroundColor={color.profileButtonColor}
                         textColor={color.white}
                         buttonStyle={styles.DoneButtonStyle}

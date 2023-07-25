@@ -275,9 +275,6 @@ DoneButtonStyle: {
     SzieSelectTextStyle: {
         fontWeight: '600',
         fontSize:moderateScale(14)
-    
-    
-      
        
     },
 

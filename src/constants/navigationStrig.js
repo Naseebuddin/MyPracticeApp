@@ -11,6 +11,8 @@ export default {
     WESHLIST:'Weshlist',
     NOTIFICATIONS:'Notifications',
     HOMESTACK:'Homestack',
-    
+    ORDERTOCONTINUE:'Ordertocontinue',
+    DETAILITEMSCREEN:'Detailitemscreen',
+    ADDPRODUCTS:'Addproducts',
   };
   

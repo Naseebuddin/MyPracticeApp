@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Text, View, Image, SafeAreaView, ScrollView, FlatList, TouchableOpacity, ImageBackground, Alert } from "react-native";
 import HeaderComponent from "../../Components/HeaderComponent";
 import eng from "../../constants/lang/eng";
@@ -13,16 +13,50 @@ import { useDispatch, useSelector } from "react-redux";
 import navigationStrig from "../../constants/navigationStrig";
 import { increment } from "../../redux/reducer/myCountItem";
 import { incrementCartItemQuantity } from "../../redux/reducer/mycartItem";
+import actionsOfApis from "../../redux/actions/actionsOfApis";
 const Everyday = ({ navigation }) => {
-
-    
     const carTItem = useSelector((state) => state.cartItem)
-
     const dispatch = useDispatch();
+    const [apiData, setApiData] = useState();
+    const [apiAllProductData, setApiAllProductData] = useState();
+    const Get_Products_Of_Single = async () => {
+        await actionsOfApis.getActionSingleProdcuts().then((res) => {
+            setApiData(res);
+            console.log(apiData, 'apidata');
+        }).catch((error) => {
+            console.log(error, 'error');
+        })
+    };
+    const Get_Product_Of_ALL = async () => {
+        await actionsOfApis.getActionsProductsApi().then((res) => {
+            setApiAllProductData(res)
+          
+
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }
+
+    useEffect(() => {
+        Get_Products_Of_Single();
+        Get_Product_Of_ALL()
+    }, [])
+
+    const renderDataItemProducts = useCallback(({ item, index }) => {
+        return (
+            <View style={styles.flatlistViewOdata}>
+                <TouchableOpacity>
+                    <View style={styles.flatlistDataOfImageView}>
+                        <Image style={styles.flatlistDataOfImage} source={{uri:item?.image}} />
+                    </View>
+                    <Text style={styles.flatlistDataOfTextStyle}>{item.title.substring(0,9)}</Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }, [apiAllProductData]);
     const calltoAddTheItem = (item, index) => {
         // dispatch(incrementCartItemQuantity(item.id))
         actions.clickTOAddItemTocart(item, index);
-      
     }
     const DATA = [
         {
@@ -85,7 +119,6 @@ const Everyday = ({ navigation }) => {
             size: 0,
             quantity: 1,
             amount: 0,
-            // grandTotal:0,
         },
         {
             id: 2,
@@ -100,7 +133,7 @@ const Everyday = ({ navigation }) => {
             size: 0,
             quantity: 1,
             amount: 0,
-            // grandTotal:0,
+
 
         },
         {
@@ -116,7 +149,6 @@ const Everyday = ({ navigation }) => {
             size: 0,
             quantity: 1,
             amount: 0,
-            // grandTotal:0,
         },
         {
             id: 4,
@@ -131,8 +163,6 @@ const Everyday = ({ navigation }) => {
             size: 0,
             quantity: 1,
             amount: 0,
-            // grandTotal:0,
-
         },
         {
             id: 5,
@@ -147,8 +177,6 @@ const Everyday = ({ navigation }) => {
             size: 0,
             quantity: 1,
             amount: 0,
-            // grandTotal:0,
-
         },
         {
             id: 6,
@@ -163,8 +191,6 @@ const Everyday = ({ navigation }) => {
             size: 0,
             quantity: 1,
             amount: 0,
-            // grandTotal:0,
-
         },
         {
             id: 7,
@@ -179,7 +205,6 @@ const Everyday = ({ navigation }) => {
             size: 0,
             quantity: 1,
             amount: 0,
-            // grandTotal:0,
         },
         {
             id: 8,
@@ -194,8 +219,6 @@ const Everyday = ({ navigation }) => {
             size: 0,
             quantity: 1,
             amount: 0,
-            // grandTotal:0,
-
         }
     ]
     const selectItemData = [
@@ -206,22 +229,22 @@ const Everyday = ({ navigation }) => {
         },
         {
             id: 2,
-            item: eng.JEANS,
+            item: eng.DEALS,
             myColor: color.black
         },
         {
             id: 3,
-            item: eng.DRESSES,
+            item: eng.PRINTEDDRESS,
             myColor: color.black
         },
         {
             id: 4,
-            item: eng.COORDER,
+            item: eng.BRAND,
             myColor: color.black
         },
         {
             id: 5,
-            item: eng.TROUSERS,
+            item: eng.FASHION,
             myColor: color.black
         }
         , {
@@ -242,18 +265,7 @@ const Everyday = ({ navigation }) => {
         });
         setIsSelectItem({ selectItemData: copyArray })
     }
-    const renderDataItemProducts = useCallback(({ item, index }) => {
-        return (
-            <View style={styles.flatlistViewOdata}>
-                <TouchableOpacity>
-                    <View style={styles.flatlistDataOfImageView}>
-                        <Image style={styles.flatlistDataOfImage} source={item.myImage} />
-                    </View>
-                    <Text style={styles.flatlistDataOfTextStyle}>{item.name}</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }, [DATA]);
+   
     const renderItemOfDataOfDealsOfTheDay = useCallback(({ item, index }) => {
         return (
             <View style={styles.flatlistViewOFdealsOfDay}>
@@ -269,7 +281,6 @@ const Everyday = ({ navigation }) => {
                         <Text style={styles.flatlistDealOfDayTextPriceStyle}>ADDTOCART</Text>
                     </TouchableOpacity>
                 </ImageBackground>
-
             </View>
         )
     }, [dataOfDealsOfTheDay]);
@@ -367,7 +378,7 @@ const Everyday = ({ navigation }) => {
                             btnTextStyle={styles.TextOfeverydayStyle}
                             buttonTextLabel={eng.FORHIM}
                             btnImage={imagePath.arrowRight}
-                            myImageBackground={imagePath.zaraman}
+                            myImageBackground={{ uri: apiData?.image }}
                             myImageBackgroundStyle={styles.myImageBackgroundStyle}
                             buttonImageStyle={styles.everydayButtonImageStyle}
                             imageViewStyling={styles.myImageBackgroundViewStyle}
@@ -378,7 +389,7 @@ const Everyday = ({ navigation }) => {
                             btnTextStyle={styles.TextOfeverydayStyle}
                             buttonTextLabel={eng.FORHER}
                             btnImage={imagePath.arrowRight}
-                            myImageBackground={imagePath.zarawomen}
+                            myImageBackground={{ uri: apiData?.image }}
                             myImageBackgroundStyle={styles.myImageBackgroundStyle}
                             imageViewStyling={styles.myImageBackgroundViewStyle}
                         />
@@ -386,10 +397,11 @@ const Everyday = ({ navigation }) => {
                     <Text style={styles.catogoriesTextStyle}>{eng.CATAGORIESONTHERISE}</Text>
                     <Text style={styles.getTextStyle}>{eng.GETSETRESTOCK}</Text>
                     <FlatList
-                        numColumns={5}
-                        scrollEnabled={false}
+                    horizontal
+                        // numColumns={5}
+                        scrollEnabled={true}
                         showsHorizontalScrollIndicator={false}
-                        data={DATA}
+                        data={apiAllProductData}
                         renderItem={renderDataItemProducts}
                     />
                     <ImageBackground

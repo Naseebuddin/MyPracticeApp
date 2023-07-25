@@ -26,12 +26,15 @@ const mycartitem = createSlice({
         deletTheCartItem: (state, action) => {
             state.cartItems.splice(action.payload, 1)
             const id = action.payload;
-            const myCartItems = state.cartItems.find(item => item.id === id );
-            if(myCartItems)
-            {
-                myCartItems.quantity--;
-            }
-            // console.log(myCartItems,'>>>>>>myCartItems');
+            // var myCartItems = state.cartItems.find(item => item.id === id );
+            const myGrandTotal = state?.cartItems?.reduce((total , item) =>{
+                const quantity = item.quantity;
+                const cost = item.cost;
+                const itemTotal = quantity *cost;
+                return total + itemTotal
+            },0);
+            state.toThegrandTotal = myGrandTotal;
+            console.log( state.toThegrandTotal,'>>>>>>myCartItems');
 
         },
         incrementCartItemQuantity: (state, action) => {

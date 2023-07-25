@@ -38,6 +38,8 @@ export default StyleSheet.create({
         width: scale(60),
         justifyContent: 'flex-end',
         height: verticalScale(70),
+    borderWidth:moderateScale(1),
+    borderColor:color.sliver,
     },
     flatlistAToZTextStyle: {
         color: color.black,
@@ -145,6 +147,12 @@ export default StyleSheet.create({
     },
     exploreALLViewStyle: {
         flexDirection: 'row',
+    },
+    ascendingAndDescending: {
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        marginHorizontal:moderateScale(20),
+        marginVertical:moderateScale(8)
     },
     collectiveImageStyle: {
         width: scale(325),

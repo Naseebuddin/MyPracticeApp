@@ -7,3 +7,6 @@ export {default as Search} from './Search/Search';
 export {default as Notifications} from './Notification/Notifications';
 export {default as Weshlist} from './WeshList/Weshlist';
 export {default as Baseket} from './Basetket/Baseket';
+export {default as Ordertocontinue} from './Ordetocontinue/Ordertocontinue';
+export {default as Detailitemscreen} from './Detailitemscreen/Detailitemscreen';
+export {default as Addproducts} from './Addproducts/Addproducts';

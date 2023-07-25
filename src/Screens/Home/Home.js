@@ -1,8 +1,8 @@
-import { FloatingAction } from "react-native-floating-action";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Image, SafeAreaView, ScrollView, Text, Dimensions, TextInput, View, FlatList, TouchableOpacity, ImageBackground } from "react-native";
 import HeaderComponent from "../../Components/HeaderComponent";
 import imagePath from "../../constants/imagePath";
+import { FloatingAction } from "react-native-floating-action";
 import eng from "../../constants/lang/eng";
 import LottieView from 'lottie-react-native';
 import navigationStrig from "../../constants/navigationStrig";
@@ -12,20 +12,43 @@ import Carousel, { Pagination } from "react-native-snap-carousel";
 import color from "../../styles/color";
 import HimAndHerBotton from "../../Components/HimAndHerBotton";
 import { moderateScale, verticalScale } from "react-native-size-matters";
-import ActionSheet from "react-native-actions-sheet";
 export const slider_Width = Dimensions.get('window').width + 5;
 export const ITEM_Width = Math.round(slider_Width * 1);
+import { getProductsAPILimtis, getProductsApi } from "../../utils/utils";
+import actionsOfApis from "../../redux/actions/actionsOfApis";
+// import { getProducts } from "../../redux/actions/actions";
 const Home = ({ navigation }) => {
     const [myTxtColor, setMyTextColor] = useState();
     const [index, setIndex] = useState(0);
     const [myBackgroundColorOfBeauty, setMyBackgroundColorOfBeauty] = useState()
     const [myTxtOfBeautyColor, setMyTxtOfBeautyColor] = useState();
     const [myBackgroundColor, setMyBackgroundColor] = useState()
-    const [state, setState] = useState(false);
+    const [state, setState] = useState(true);
     const isCarousel = useRef(null);
     const [millySecond, setMillySecond] = useState(60);
     const [minutes, setMinutes] = useState(60);
-    const [hour, setHour] = useState(2)
+    const [hour, setHour] = useState(2);
+    const [apiData, setApiDATA] = useState();
+    const [apiDataLimits, setApiDataLimits] = useState();
+    const Get_products = async () => {
+        await actionsOfApis.getActionsProductsApi().then((res) => {
+            setApiDATA(res)
+        }).catch((error) => {
+            // console.log(error, 'error');
+        })
+    }
+    const Get_Products_Limits = async () => {
+        await actionsOfApis.getActionsProductsLimitsApi().then((res) => {
+            setApiDataLimits(res)
+        }).catch((error) => {
+            // console.log(error, 'error');
+        })
+    };
+    // console.log(apiData, 'aaaapidata>>>>>>');
+    useEffect(() => {
+        Get_products()
+        Get_Products_Limits()
+    }, [])
     const buttonState = () => {
         if (state == true) {
             setMyTextColor(color.black);
@@ -98,10 +121,8 @@ const Home = ({ navigation }) => {
                     style={styles.carouselImageStyle}
                 />
                 <View style={{ marginTop: -15 }}>
-
                 </View>
             </View>
-
         )
     }
     const continueBrowsingData = [
@@ -149,7 +170,6 @@ const Home = ({ navigation }) => {
         },
 
     ]
-
     useEffect(() => {
         {
             if (millySecond > 0) {
@@ -175,8 +195,7 @@ const Home = ({ navigation }) => {
         }, 360000)
         return () => clearInterval(interval)
     }, [hour])
-
-    const actions = [
+    const actionsItems = [
         {
             icon: imagePath.basket,
             text: eng.MYFASHIOn,
@@ -207,50 +226,45 @@ const Home = ({ navigation }) => {
     const renderBrowsingProductsTwoItems = useCallback(({ item, index }) => {
         return (
             <View style={styles.tagViewStyle}>
-                <TouchableOpacity>
-                    <ImageBackground resizeMode="stretch" style={styles.priceTageFlatList} source={item.itemImage}>
+                <TouchableOpacity onPress={() => navigation.navigate(navigationStrig.DETAILITEMSCREEN, { item })}>
+                    <ImageBackground resizeMode="stretch" style={styles.priceTageFlatList} source={{ uri: item.image }}>
                         <View style={styles.pricTagView}>
-                            <Text style={styles.pricTagText} >{item.name}</Text>
-                            <Text style={styles.pricTagText}>{item.description}</Text>
-                            <Text style={styles.pricTagTextUnder}>{eng.UNDER}</Text>
+                            <Text style={styles.pricTagText} >{item.category}</Text>
+                            <Text style={styles.pricTagText}>{item?.description?.substring(0, 20)}...</Text>
+                            <Text style={styles.pricTagTextUnder}>{item?.title?.substring(0, 16)}...</Text>
                         </View>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
         )
-    }, [continueBrowsingData]);
+    }, [apiDataLimits]);
     const renderDataItemProducts = useCallback(({ item, index }) => {
         return (
-
             <View style={styles.flatlistView}>
                 <TouchableOpacity>
                     <View style={styles.flatlistImageView}>
-                        <Image style={styles.flatImage} source={item.myImage} />
+                        <Image style={styles.flatImage} source={{ uri: item.image }} />
                     </View>
-                    <Text style={styles.flatlistText}>{item.name}</Text>
+                    <Text style={styles.flatlistText}>{item.category}</Text>
                 </TouchableOpacity>
             </View>
         )
-    }, [DATA]);
+    }, [apiData]);
     const continueBrowsingTopBrands = useCallback(({ item, index }) => {
         return (
             <View >
                 <TouchableOpacity>
                     <View >
-                        <ImageBackground resizeMode="stretch" style={styles.startingPriceFlatListImage} source={item.itemImage}>
-                            <Text style={styles.brandTextStyles}>{item.name}</Text>
-                            <Text>{item.description}</Text>
+                        <ImageBackground resizeMode="stretch" style={styles.startingPriceFlatListImage} source={{ uri: item.image }}>
+                            <Text style={styles.brandTextStyles}>{item.title.substring(0, 14)}</Text>
+                            <Text>{item.description.substring(0, 14)}</Text>
                             <Text>{item.price}</Text>
                         </ImageBackground>
                     </View>
                 </TouchableOpacity>
             </View>
         )
-
-    }, [continueBrowsingData]);
-    //redux
-
-
+    }, [apiData]);
     return (
         <SafeAreaView style={styles.mainView}>
             <View style={styles.mainView}>
@@ -302,7 +316,7 @@ const Home = ({ navigation }) => {
                             horizontal
                             keyExtractor={item => item.id}
                             showsHorizontalScrollIndicator={false}
-                            data={DATA}
+                            data={apiData}
                             renderItem={renderDataItemProducts}
                         />
                         <View>
@@ -333,7 +347,6 @@ const Home = ({ navigation }) => {
                                 inactiveDotOpacity={1}
                                 inactiveDotScale={1}
                             />
-
                             <LottieView
                                 resizeMode="contain"
                                 style={styles.lottieImageStyle}
@@ -362,7 +375,7 @@ const Home = ({ navigation }) => {
                                         paddingBottom: moderateScale(10)
                                     }}
                                     horizontal
-                                    data={continueBrowsingData}
+                                    data={apiData}
                                     keyExtractor={item => item.id}
                                     renderItem={renderBrowsingProductsTwoItems}
                                 />
@@ -382,7 +395,7 @@ const Home = ({ navigation }) => {
                             <FlatList
                                 horizontal
                                 scrollEnabled={false}
-                                data={continueBrowsingData.slice(4, 6)}
+                                data={apiDataLimits}
                                 keyExtractor={item => item.id}
                                 renderItem={renderBrowsingProductsTwoItems}
                             />
@@ -391,24 +404,25 @@ const Home = ({ navigation }) => {
                                 <FlatList
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
-                                    data={continueBrowsingData}
+                                    data={apiData}
                                     keyExtractor={item => item.id}
                                     renderItem={continueBrowsingTopBrands}
                                 />
                             </View>
                         </View>
                     </View>
+
+
                 </ScrollView>
                 <FloatingAction
                     color={color.floatingBtnColor}
                     floatingIcon={imagePath.mmm}
                     buttonSize={45}
-                    actions={actions}
+                    actions={actionsItems}
                     onPressItem={name => {
-                        console.log(`selected button: ${name}`);
+                        // console.log(`selected button: ${name}`);
                     }}
                 />
-
             </View>
         </SafeAreaView>
     )

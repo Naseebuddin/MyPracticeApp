@@ -8,13 +8,13 @@ const Search = () => {
     const [inputText, setInputText] = useState('');
     const myTododata = useSelector((state) => state.counter)
     const dispatch = useDispatch()
-    console.log("appdata", myTododata);
+    // console.log("appdata", myTododata);
     const deletingItem = (itemToDelet) => {
         actions.deleteMyActionUserData(itemToDelet)
     }
 
     const count = useSelector((state)=>state.incrementAndDecrement.value)
-    console.log('value',count);
+    // console.log('value',count);
     
     return (
         <View style={styles.container}>

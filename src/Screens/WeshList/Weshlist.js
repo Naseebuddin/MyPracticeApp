@@ -6,7 +6,6 @@ import styles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment } from "../../redux/reducer/myCountItem";
 import actions from "../../redux/actions/actions";
-
 const Weshlist = () => {
     const dispatch = useDispatch();
     const count = useSelector((state) => state.incrementAndDecrement)

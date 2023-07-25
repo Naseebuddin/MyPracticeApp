@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useState } from "react";
-import { Text, View, SafeAreaView, TextInput,Image, Dimensions, TouchableOpacity, ImageBackground, FlatList, ScrollView } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Text, View, SafeAreaView, Image, Dimensions, TouchableOpacity, ImageBackground, FlatList, ScrollView } from "react-native";
 import styles from "./styles";
 import HeaderComponent from "../../Components/HeaderComponent";
 import eng from "../../constants/lang/eng";
@@ -7,11 +7,49 @@ import imagePath from "../../constants/imagePath";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import color from "../../styles/color";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import actionsOfApis from "../../redux/actions/actionsOfApis";
+import { getProductsDescendingApi } from "../../utils/utils";
+import TextInputWithLable from "../../Components/TextInputWithLabel";
 export const slider_Width = Dimensions.get('window').width + 5;
+
 export const ITEM_Width = Math.round(slider_Width * 1);
 const Luxe = () => {
     const isCarousel = useRef(null);
     const [index, setIndex] = useState(0);
+    const [apiData, setApiData] = useState();
+    const [singleProduct, setSingleProduct] = useState();
+    var ApiDataForCarousel = [];
+    ApiDataForCarousel = apiData;
+    // console.log(ApiDataForCarousel, 'ApiDataForCarousel.image>>>');
+    const Get_products = async () => {
+        await actionsOfApis.getActionsProductsApi().then((res) => {
+            setApiData(res)
+        }).catch((error) => {
+            // console.log(error, "err");
+        })
+    }
+    const Get_Products_In_Descending = async () => {
+        await actionsOfApis.getActionProductsDescendingApi().then((res) => {
+            setApiData(res)
+            // console.log(apiData, 'DESCENDIN>>>>>>');
+        }).catch((error) => {
+            // console.log(error, 'error');
+        })
+    }
+    const Get_Product_Of_Single = async () => {
+        await actionsOfApis.getActionSingleProdcuts().then((res) => {
+            setSingleProduct(res)
+            console.log(res);
+        }).catch((error) => {
+            console.log(error, 'error');
+        })
+    }
+    console.log(singleProduct, 'ssss');
+    useEffect(() => {
+        Get_products()
+        Get_Products_In_Descending()
+        Get_Product_Of_Single();
+    }, [])
     const dataOfDealsOfTheDay = [
         {
             id: 1,
@@ -91,34 +129,35 @@ const Luxe = () => {
         }
     ]
     const renderItemOfDataOfBudgetBuys = useCallback(({ item, index }) => {
+        // console.log(item.image, 'image render ---=-');
         return (
             <View style={styles.flatlistViewOfAToZStyle}>
                 <TouchableOpacity>
                     <Image
                         resizeMode="stretch" style={styles.flatlistImageOfAToZStyle}
-                        source={item.dealImage} />
-                    <Text style={styles.flatlistAToZTextStyle}>{item.deatailOfItem}</Text>
+                        source={{ uri: item.image }} />
+                    <Text style={styles.flatlistAToZTextStyle}  >{item.title.substring(0, 12)}...</Text>
                 </TouchableOpacity>
             </View>
         )
-    }, [dataOfDealsOfTheDay]);
-    const renderItemOfDataOfBrandsWeLove = useCallback(({ item, index }) => {
+    });
+    const renderItemOfDataOfBrandsWeLove = ({ item, index }) => {
         return (
             <View style={styles.flatlistViewOfBrandsWeLoveStyle}>
                 <TouchableOpacity>
                     <Image
                         resizeMode="stretch" style={styles.flatlistImageOfBrandsWeLoveStyle}
-                        source={item.dealImage} />
-                    <Text style={styles.flatlistBrandsWeLoveTextStyle}>{item.deatailOfItem}</Text>
+                        source={{ uri: item.image }} />
+                    <Text style={styles.flatlistBrandsWeLoveTextStyle}>{item.title.substring(5, 14)}</Text>
                 </TouchableOpacity>
                 <Text style={styles.flatlistBrandsWeLoveTextOfLineStyle}>___________________</Text>
                 <View style={styles.exploreViewStyle}>
-                    <Text style={styles.flatlistBrandsWeLoveTextOfExploreStyle}>{item.explore}</Text>
+                    <Text style={styles.flatlistBrandsWeLoveTextOfExploreStyle}>{item.category}</Text>
                     <Image style={styles.exploreDirectionImageStyle} source={imagePath.directio} />
                 </View>
             </View>
         )
-    }, [dataOfDealsOfTheDay]);
+    };
     const carouselData = [{
         id: 1,
         url: imagePath.zara1,
@@ -148,8 +187,8 @@ const Luxe = () => {
         return (
             <View >
                 <Image
-                    resizeMode="stretch"
-                    source={item.url}
+                    resizeMode="center"
+                    source={{ uri: item.image }}
                     style={styles.carouselImageStyle}
                 />
                 <View style={{ marginTop: -10 }}>
@@ -176,14 +215,14 @@ const Luxe = () => {
                     contentContainerStyle={{ paddingBottom: moderateScale(120), }}
                 >
                     <View>
-                        <Image resizeMode="stretch" style={styles.imageBackgroundStyle} source={imagePath.zara3} />
+                        <Image resizeMode="stretch" style={styles.imageBackgroundStyle} source={{ uri: singleProduct.image }} />
                         <View style={styles.budgetBuysViewStyle}>
                             <FlatList
                                 horizontal
                                 scrollEnabled={true}
                                 keyExtractor={item => item.id}
                                 showsHorizontalScrollIndicator={false}
-                                data={dataOfDealsOfTheDay}
+                                data={apiData}
                                 renderItem={renderItemOfDataOfBudgetBuys}
                             />
                         </View>
@@ -191,7 +230,7 @@ const Luxe = () => {
                             autoplay={true}
                             layout={'stack'}
                             ref={isCarousel}
-                            data={carouselData}
+                            data={ApiDataForCarousel}
                             renderItem={renderItem}
                             sliderWidth={slider_Width}
                             itemWidth={ITEM_Width}
@@ -220,16 +259,24 @@ const Luxe = () => {
                     </View>
                     <Text style={styles.brandWeLoveTextStyle}>{eng.BRANDWELOVE}</Text>
                     <Text style={styles.flatlistBrandsWeLoveLineStyle}>_________▼_________</Text>
+                    <View style={styles.ascendingAndDescending}>
+                        <TouchableOpacity onPress={() => Get_products()}>
+                            <Text>{eng.ASCENDING}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => Get_Products_In_Descending()}>
+                            <Text>{eng.DESCENDING}</Text>
+                        </TouchableOpacity>
+                    </View>
                     <FlatList
                         numColumns={2}
                         scrollEnabled={false}
                         keyExtractor={item => item.id}
                         showsHorizontalScrollIndicator={false}
-                        data={dataOfDealsOfTheDay}
+                        data={apiData}
                         renderItem={renderItemOfDataOfBrandsWeLove}
                     />
                     <TouchableOpacity >
-                        <Image resizeMode="stretch" style={styles.collectiveImageStyle} source={imagePath.zaraman} />
+                        <Image resizeMode="stretch" style={styles.collectiveImageStyle} source={{uri:singleProduct.image}} />
                         <View style={styles.viewOfTheCollecttiveStyle}>
                             <Text style={styles.theCollectiveTextStyle}>{eng.THECOLLECTIVE}</Text>
                             <View style={styles.exploreALLViewStyle}>
@@ -238,7 +285,8 @@ const Luxe = () => {
                             </View>
                         </View>
                     </TouchableOpacity>
-                   
+
+
                 </ScrollView>
             </View>
         </SafeAreaView>

@@ -15,17 +15,29 @@ const clickTOAddItemTocart = (state) => {
 const clickToDeleltItemOfCart = (state) => {
     dispatch(deletTheCartItem(state))
 };
-const clearMyAllCartItem = (state) =>{
+const clearMyAllCartItem = (state) => {
     dispatch(clearCart(state))
 }
-const grandTotalOFAllItem = (state)=>{
+const grandTotalOFAllItem = (state) => {
     dispatch(GrandTotal(state));
 }
+
+//  const getProducts = () => {
+//     return new Promise((resolve, reject) => {
+//         axios.get(API_PODUCTS_URL).then((res) => {
+//             resolve(res)
+//         }).catch(err => {
+//             reject(err)
+//         })
+//     })
+// }
+
 export default {
     addMyActionUserData,
     deleteMyActionUserData,
     clickToDeleltItemOfCart,
     clickTOAddItemTocart,
     clearMyAllCartItem,
-    grandTotalOFAllItem
+    grandTotalOFAllItem,
+    // getProducts
 }

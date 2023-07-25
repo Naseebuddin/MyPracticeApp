@@ -79,7 +79,7 @@ export default StyleSheet.create({
     },
     carouselImageStyle: {
         width: 380,
-        height: 40,
+        height: 60,
     },
     lottieImageStyle: {
         marginTop: moderateScale(-5),
