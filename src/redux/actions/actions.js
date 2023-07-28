@@ -1,7 +1,9 @@
 import { deleteUserData, toggleTodo, userData } from "../reducer/counterReducerSlice";
 import { decrement, increment } from "../reducer/myCountItem";
 import { GrandTotal, addItemToCart, clearCart, deletTheCartItem } from "../reducer/mycartItem";
+import { getLoginStatus } from "../reducer/stateChanging";
 import store from "../store";
+
 const { dispatch } = store;
 const addMyActionUserData = (state) => {
     dispatch(userData(state));
@@ -21,6 +23,10 @@ const clearMyAllCartItem = (state) => {
 const grandTotalOFAllItem = (state) => {
     dispatch(GrandTotal(state));
 }
+const appStateStatusAction = (state) =>{
+    dispatch(getLoginStatus(state))
+}
+
 
 //  const getProducts = () => {
 //     return new Promise((resolve, reject) => {
@@ -39,5 +45,6 @@ export default {
     clickTOAddItemTocart,
     clearMyAllCartItem,
     grandTotalOFAllItem,
+    appStateStatusAction,
     // getProducts
 }

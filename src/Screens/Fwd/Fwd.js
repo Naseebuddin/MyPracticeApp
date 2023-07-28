@@ -10,7 +10,6 @@ import color from "../../styles/color";
 import { moderateScale } from "react-native-size-matters";
 import HimAndHerBotton from "../../Components/HimAndHerBotton";
 import actionsOfApis from "../../redux/actions/actionsOfApis";
-import { Addproducts } from "../index";
 import navigationStrig from "../../constants/navigationStrig";
 export const slider_Width = Dimensions.get('window').width + 5;
 export const ITEM_Width = Math.round(slider_Width * 1);

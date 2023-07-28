@@ -8,7 +8,7 @@ const HomeStack = () => {
         <Stack.Navigator screenOptions={{headerShown:false}}>
             <Stack.Screen name={navigationStrig.HOMESTACK} component={Home} />
             <Stack.Screen name={navigationStrig.SEARCH} component={Search} />
-            <Stack.Screen name={navigationStrig.BASEKET} component={Baseket} />
+            {/* <Stack.Screen name={navigationStrig.BASEKET} component={Baseket} /> */}
             <Stack.Screen name={navigationStrig.NOTIFICATIONS} component={Notifications} />
             <Stack.Screen name={navigationStrig.WESHLIST} component={Weshlist} />
         </Stack.Navigator>

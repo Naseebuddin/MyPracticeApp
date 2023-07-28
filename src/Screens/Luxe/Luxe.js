@@ -11,7 +11,6 @@ import actionsOfApis from "../../redux/actions/actionsOfApis";
 import { getProductsDescendingApi } from "../../utils/utils";
 import TextInputWithLable from "../../Components/TextInputWithLabel";
 export const slider_Width = Dimensions.get('window').width + 5;
-
 export const ITEM_Width = Math.round(slider_Width * 1);
 const Luxe = () => {
     const isCarousel = useRef(null);
@@ -135,8 +134,8 @@ const Luxe = () => {
                 <TouchableOpacity>
                     <Image
                         resizeMode="stretch" style={styles.flatlistImageOfAToZStyle}
-                        source={{ uri: item.image }} />
-                    <Text style={styles.flatlistAToZTextStyle}  >{item.title.substring(0, 12)}...</Text>
+                        source={{ uri: item?.image }} />
+                    <Text style={styles.flatlistAToZTextStyle}  >{item?.title.substring(0, 12)}...</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -147,13 +146,13 @@ const Luxe = () => {
                 <TouchableOpacity>
                     <Image
                         resizeMode="stretch" style={styles.flatlistImageOfBrandsWeLoveStyle}
-                        source={{ uri: item.image }} />
-                    <Text style={styles.flatlistBrandsWeLoveTextStyle}>{item.title.substring(5, 14)}</Text>
+                        source={{ uri: item?.image }} />
+                    <Text style={styles.flatlistBrandsWeLoveTextStyle}>{item?.title.substring(5, 14)}</Text>
                 </TouchableOpacity>
                 <Text style={styles.flatlistBrandsWeLoveTextOfLineStyle}>___________________</Text>
                 <View style={styles.exploreViewStyle}>
-                    <Text style={styles.flatlistBrandsWeLoveTextOfExploreStyle}>{item.category}</Text>
-                    <Image style={styles.exploreDirectionImageStyle} source={imagePath.directio} />
+                    <Text style={styles.flatlistBrandsWeLoveTextOfExploreStyle}>{item?.category}</Text>
+                    <Image style={styles.exploreDirectionImageStyle} source={imagePath?.directio} />
                 </View>
             </View>
         )
@@ -188,7 +187,7 @@ const Luxe = () => {
             <View >
                 <Image
                     resizeMode="center"
-                    source={{ uri: item.image }}
+                    source={{ uri: item?.image }}
                     style={styles.carouselImageStyle}
                 />
                 <View style={{ marginTop: -10 }}>
@@ -215,7 +214,7 @@ const Luxe = () => {
                     contentContainerStyle={{ paddingBottom: moderateScale(120), }}
                 >
                     <View>
-                        <Image resizeMode="stretch" style={styles.imageBackgroundStyle} source={{ uri: singleProduct.image }} />
+                        <Image resizeMode="stretch" style={styles.imageBackgroundStyle} source={{ uri: singleProduct?.image }} />
                         <View style={styles.budgetBuysViewStyle}>
                             <FlatList
                                 horizontal
@@ -237,7 +236,7 @@ const Luxe = () => {
                             onSnapToItem={index => setIndex(index)}
                         />
                         <Pagination
-                            dotsLength={carouselData.length}
+                            dotsLength={carouselData?.length}
                             activeDotIndex={index}
                             carouselRef={isCarousel}
                             containerStyle={{ paddingVertical: 10, }}
@@ -276,7 +275,7 @@ const Luxe = () => {
                         renderItem={renderItemOfDataOfBrandsWeLove}
                     />
                     <TouchableOpacity >
-                        <Image resizeMode="stretch" style={styles.collectiveImageStyle} source={{uri:singleProduct.image}} />
+                        <Image resizeMode="stretch" style={styles.collectiveImageStyle} source={{uri:singleProduct?.image}} />
                         <View style={styles.viewOfTheCollecttiveStyle}>
                             <Text style={styles.theCollectiveTextStyle}>{eng.THECOLLECTIVE}</Text>
                             <View style={styles.exploreALLViewStyle}>

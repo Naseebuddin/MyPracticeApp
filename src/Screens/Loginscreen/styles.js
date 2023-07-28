@@ -5,7 +5,8 @@ const { StyleSheet } = require("react-native")
 
 export default StyleSheet.create({
     mainView: {
-        flex: moderateScale(1)
+        flex: moderateScale(1),
+        backgroundColor: color.white
     },
     backgroundProfileView: {
         backgroundColor: color.profileBackgroundColor,
@@ -51,16 +52,9 @@ export default StyleSheet.create({
         borderRadius: moderateScale(0)
     },
     actionSheetViewStyle: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        // flexDirection: 'row',
         marginHorizontal: moderateScale(25),
         marginTop: moderateScale(25),
-        alignItems: 'center'
-    },
-    actionSheetTermsOfUseTextSTyle: {
-        fontSize: moderateScale(12),
-        color: color.profileButtonColor,
-        fontWeight: 'bold',
     },
     actionSheetCloseButtonStyle: {
         width: scale(26),
@@ -78,15 +72,16 @@ export default StyleSheet.create({
         marginTop: moderateScale(25),
         marginBottom: moderateScale(20)
     },
-    // actionSheetLoginSignupTextSTyle: {
-    //     fontSize: moderateScale(20),
-    //     marginHorizontal: moderateScale(8),
-    //     fontWeight: '500'
-    // },
     actionSheetLoginSignupTextSTyle: {
         fontSize: moderateScale(18),
-        marginHorizontal: moderateScale(5),
+        marginHorizontal: moderateScale(8),
         fontWeight: 'bold'
+    },
+    orTextSTyle: {
+        fontSize: moderateScale(14),
+        marginTop: verticalScale(4),
+        fontWeight: '200',
+        color: color.darkSilver
     },
     actionSheetLoginSignupTextORSTyle: {
         fontSize: moderateScale(14),
@@ -96,30 +91,29 @@ export default StyleSheet.create({
         fontSize: moderateScale(11),
         marginLeft: moderateScale(8),
         fontWeight: '300',
-        color: color.darkSilver,
+        color: color.darkSilver
+    },
+    havingTroubleTextSTyle: {
+        fontSize: moderateScale(11),
+        marginLeft: moderateScale(8),
+        fontWeight: '400',
+        color: color.darkSilver
     },
     actionSheetTermsOfUseTextSTyle: {
         fontSize: moderateScale(11),
         color: color.profileButtonColor,
         fontWeight: 'bold',
     },
-    orTextSTyle: {
-        fontSize: moderateScale(14),
-        marginTop: verticalScale(4),
-        fontWeight: '200',
-        color: color.darkSilver
+    getHelpTextSTyle: {
+        fontSize: moderateScale(12),
+        color: color.profileButtonColor,
+        fontWeight: 'bold',
     },
     actionSheetBYContinueView: {
         flexDirection: 'row',
         marginHorizontal: moderateScale(6),
         marginTop: moderateScale(25),
         marginBottom: moderateScale(20)
-    },
-    havingTroubleTextSTyle: {
-        fontSize: moderateScale(12),
-        marginLeft: moderateScale(8),
-        // fontWeight: '300',
-        color: color.darkSilver
     },
     continueButtonStyle: {
         marginTop: moderateScale(30),
@@ -128,7 +122,9 @@ export default StyleSheet.create({
         backgroundColor: color.profileButtonColor,
         alignItems: 'center',
         paddingHorizontal: moderateScale(65),
-        marginHorizontal: moderateScale(16)
-
+        marginHorizontal: moderateScale(16),
     },
+    emptyView: {
+        marginTop: verticalScale(18)
+    }
 })

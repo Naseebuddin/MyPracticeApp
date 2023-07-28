@@ -209,7 +209,7 @@ export default StyleSheet.create({
         // width: scale(190),
         backgroundColor: color.profileButtonColor,
         alignItems: 'center',
-        paddingHorizontal: moderateScale(65),
+        // paddingHorizontal: moderateScale(65),
         marginHorizontal: moderateScale(8),
         borderRadius: moderateScale(4)
     },
@@ -232,7 +232,7 @@ DoneButtonStyle: {
     },
     btnViewStyle: {
         justifyContent: 'flex-end',
-        flex: moderateScale(0.2),
+        // flex: moderateScale(0.2),
     },
     logigSighnupTextStyle: {
         color: color.white,

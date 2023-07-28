@@ -14,5 +14,6 @@ export default {
     ORDERTOCONTINUE:'Ordertocontinue',
     DETAILITEMSCREEN:'Detailitemscreen',
     ADDPRODUCTS:'Addproducts',
+    LOGINSCREEN:'Loginscreen',
   };
   

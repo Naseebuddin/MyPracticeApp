@@ -12,4 +12,4 @@ export const API_JEWELERY_PRODUCTS_URL = getApiUrl('products/category/jewelery')
 export const API_ELECTRONIC_PRODUCTS_URL = getApiUrl('products/category/electronics');
 export const API_MANS_PRODUCTS_URL = getApiUrl(`products/category/men's%20clothing`);
 export const API_WOMENS_PRODUCTS_URL = getApiUrl(`products/category/women's%20clothing`);
-export const Api_ADDNEW_PRODUCTS_URL =getApiUrl(`products`)
+export const Api_ADDNEW_PRODUCTS_URL =getApiUrl(`products`);

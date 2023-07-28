@@ -72,7 +72,7 @@ export default {
   BYCONTINUING:'By continuing, I agree to the',
   TERMSOFUSE:'Terms of Use',
   and:'&',
-  PRIVACY:'Privace Policy',
+  PRIVACY:'Privacy Policy',
   CONTINUE:'CONTINUE',
   HAVINGTROUBLE:'Having trouble logging in?',
   GET:'Get help',

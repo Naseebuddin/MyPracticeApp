@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { GoogleSignin, User } from '@react-native-google-signin/google-signin';
 import { Image, SafeAreaView, ScrollView, Text, Dimensions, TextInput, View, FlatList, TouchableOpacity, ImageBackground } from "react-native";
 import HeaderComponent from "../../Components/HeaderComponent";
 import imagePath from "../../constants/imagePath";
@@ -227,9 +228,9 @@ const Home = ({ navigation }) => {
         return (
             <View style={styles.tagViewStyle}>
                 <TouchableOpacity onPress={() => navigation.navigate(navigationStrig.DETAILITEMSCREEN, { item })}>
-                    <ImageBackground resizeMode="stretch" style={styles.priceTageFlatList} source={{ uri: item.image }}>
+                    <ImageBackground resizeMode="stretch" style={styles.priceTageFlatList} source={{ uri: item?.image }}>
                         <View style={styles.pricTagView}>
-                            <Text style={styles.pricTagText} >{item.category}</Text>
+                            <Text style={styles.pricTagText} >{item?.category}</Text>
                             <Text style={styles.pricTagText}>{item?.description?.substring(0, 20)}...</Text>
                             <Text style={styles.pricTagTextUnder}>{item?.title?.substring(0, 16)}...</Text>
                         </View>
@@ -243,9 +244,9 @@ const Home = ({ navigation }) => {
             <View style={styles.flatlistView}>
                 <TouchableOpacity>
                     <View style={styles.flatlistImageView}>
-                        <Image style={styles.flatImage} source={{ uri: item.image }} />
+                        <Image style={styles.flatImage} source={{ uri: item?.image }} />
                     </View>
-                    <Text style={styles.flatlistText}>{item.category}</Text>
+                    <Text style={styles.flatlistText}>{item?.category}</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -255,10 +256,10 @@ const Home = ({ navigation }) => {
             <View >
                 <TouchableOpacity>
                     <View >
-                        <ImageBackground resizeMode="stretch" style={styles.startingPriceFlatListImage} source={{ uri: item.image }}>
-                            <Text style={styles.brandTextStyles}>{item.title.substring(0, 14)}</Text>
-                            <Text>{item.description.substring(0, 14)}</Text>
-                            <Text>{item.price}</Text>
+                        <ImageBackground resizeMode="stretch" style={styles.startingPriceFlatListImage} source={{ uri: item?.image }}>
+                            <Text style={styles.brandTextStyles}>{item?.title.substring(0, 14)}</Text>
+                            <Text>{item?.description.substring(0, 14)}</Text>
+                            <Text>{item?.price}</Text>
                         </ImageBackground>
                     </View>
                 </TouchableOpacity>
@@ -347,12 +348,12 @@ const Home = ({ navigation }) => {
                                 inactiveDotOpacity={1}
                                 inactiveDotScale={1}
                             />
-                            <LottieView
+                            {/* <LottieView
                                 resizeMode="contain"
                                 style={styles.lottieImageStyle}
                                 source={require('./../../assets/image/sale.json')}
                                 autoPlay
-                                loop />
+                                loop /> */}
                             <View style={styles.himeAndHerViewStyle}>
                                 <HimAndHerBotton
                                     buttonStyle={styles.bottonStyle}

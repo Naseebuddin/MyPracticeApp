@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_DESCENDING_PRODUCTS_URL, API_ELECTRONIC_PRODUCTS_URL, API_JEWELERY_PRODUCTS_URL, API_LIMITS_PRODUCTS_URL, API_MANS_PRODUCTS_URL, API_PODUCTS_URL, API_SINGLE_PRODUCTS_URL, API_WOMENS_PRODUCTS_URL, Api_ADDNEW_PRODUCTS_URL } from "../Config/Urls";
+import { API_AUTH_LOGIN_URL, API_DESCENDING_PRODUCTS_URL, API_ELECTRONIC_PRODUCTS_URL, API_JEWELERY_PRODUCTS_URL, API_LIMITS_PRODUCTS_URL, API_MANS_PRODUCTS_URL, API_PODUCTS_URL, API_SINGLE_PRODUCTS_URL, API_WOMENS_PRODUCTS_URL, Api_ADDNEW_PRODUCTS_URL, Api_LOGIN_USER_URL } from "../Config/Urls";
 const axiosApiRequset = (endpoint, method, header, data) => {
     return new Promise((resolve, reject) => {
         axios({
@@ -10,6 +10,7 @@ const axiosApiRequset = (endpoint, method, header, data) => {
         }).then((res) => {
             return resolve(res.data)
         }).catch((error) => {
+            console.log(error)
             return reject(error)
         })
     })
@@ -94,4 +95,15 @@ export const postApiAddNewProducts = () => {
             return reject(error)
         })
     })
-};     
+};
+export const PostLoginApi = (data) => {
+    return new Promise((resolve, reject) => {
+        axiosApiRequset(API_AUTH_LOGIN_URL, "post", {}, data).then((res) => {
+            console.log('resp=======1231212', res)
+            return resolve(res)
+        }).catch((error) => {
+            console.log(error, "The error")
+            return reject(error)
+        });
+    });
+};

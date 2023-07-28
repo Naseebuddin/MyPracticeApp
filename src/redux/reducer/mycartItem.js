@@ -1,15 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     cartItems: [],
-    toThegrandTotal:"",
+    toThegrandTotal: "",
+    // stateStatus: false
 }
 const mycartitem = createSlice({
     name: 'myCartItem',
     initialState,
     reducers: {
         addItemToCart: (state, action) => {
-            const id  = action?.payload;
- // console.log(state.cartItems.includes(action.payload), state.cartItems, "action?.payload");
+            const id = action?.payload;
+            // console.log(state.cartItems.includes(action.payload), state.cartItems, "action?.payload");
             const found = state.cartItems.some(el => el.id === action.payload?.id);
             if (!found) {
                 state.cartItems.push(action.payload)
@@ -19,7 +20,7 @@ const mycartitem = createSlice({
                     const itemTotal = quantity * cost;
                     return total + itemTotal;
                 }, 0)
-                state.toThegrandTotal =myGrandTotal;
+                state.toThegrandTotal = myGrandTotal;
                 // console.log(state.toThegrandTotal, 'FirstItem>>>>>>',);  
             }
         },
@@ -27,14 +28,14 @@ const mycartitem = createSlice({
             state.cartItems.splice(action.payload, 1)
             const id = action.payload;
             // var myCartItems = state.cartItems.find(item => item.id === id );
-            const myGrandTotal = state?.cartItems?.reduce((total , item) =>{
+            const myGrandTotal = state?.cartItems?.reduce((total, item) => {
                 const quantity = item.quantity;
                 const cost = item.cost;
-                const itemTotal = quantity *cost;
+                const itemTotal = quantity * cost;
                 return total + itemTotal
-            },0);
+            }, 0);
             state.toThegrandTotal = myGrandTotal;
-            console.log( state.toThegrandTotal,'>>>>>>myCartItems');
+            console.log(state.toThegrandTotal, '>>>>>>myCartItems');
 
         },
         incrementCartItemQuantity: (state, action) => {
@@ -43,7 +44,7 @@ const mycartitem = createSlice({
             if (itemToIncrement) {
                 itemToIncrement.quantity++;
                 // console.log(itemToIncrement,'itemToIncrement');
-            }   
+            }
         },
         decrementCartItemQuantity: (state, action) => {
             const itemId = action.payload;
@@ -65,9 +66,9 @@ const mycartitem = createSlice({
                     const itemTotal = quantity * cost;
                     return total + itemTotal;
                 }, 0);
-                state.toThegrandTotal =myGrandTotal;
+                state.toThegrandTotal = myGrandTotal;
                 // console.log(state.toThegrandTotal, 'aaaaaaa',myGrandTotal,'>>>>>>>>>>0000');
-            } 
+            }
         },
         incrementByAmountOfSize: (state, action) => {
             const { selectedSzie, id } = action.payload;
@@ -78,8 +79,11 @@ const mycartitem = createSlice({
         },
         clearCart: (state) => {
             state.cartItems = [];
-            state.toThegrandTotal=0;
-        }
+            state.toThegrandTotal = 0;
+        },
+        // getLoginStatus: (state, action) => {
+        //     state.stateStatus = action.payload;
+        // }
     }
 })
 export const { addItemToCart,
@@ -89,5 +93,6 @@ export const { addItemToCart,
     incrementByAmountCartItem,
     incrementByAmountOfSize,
     GrandTotal,
+    // getLoginStatus
 } = mycartitem.actions;
 export default mycartitem.reducer;

@@ -11,19 +11,19 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import TextInputWithLable from "../../Components/TextInputWithLabel";
 
 const Profile = () => {
-    
+
     const actionSheetRef = useRef(null);
     const actionClose = () => {
-        actionSheetRef.current?.hide()
+        actionSheetRef?.current?.hide()
     }
-    const [myTextShow, setMyTextSHow] = useState('');
+    const [myTextShow, setMyTextSHow] = useState();
     return (
         <SafeAreaView style={styles.mainView}>
             <View style={styles.mainView}>
                 <KeyboardAwareScrollView>
                     <View style={styles.backgroundProfileView}>
                         <View style={styles.profileBackgroundView}>
-                            <Image resizeMode="stretch" style={styles.profileImageStyle} source={imagePath.userBlackColor} />
+                            <Image resizeMode="stretch" style={styles.profileImageStyle} source={imagePath?.userBlackColor} />
                         </View>
 
                         <ButtonWithLabel
@@ -32,9 +32,9 @@ const Profile = () => {
                             }}
                             btnBackgroundColor={color.profileButtonColor}
                             textColor={color.white}
-                            buttonStyle={styles.logigSighnupStyle} 
+                            buttonStyle={styles.logigSighnupStyle}
                             btnTextStyle={styles.logigSighnupTextStyle}
-                             buttonTextLabel={eng.LOGINSIGNUP} />
+                            buttonTextLabel={eng.LOGINSIGNUP} />
 
                     </View>
                     <View>
@@ -42,29 +42,33 @@ const Profile = () => {
                             containerStyle={styles.containerStyleActionSheet}
                             ref={actionSheetRef}>
                             <View style={styles.actionSheetViewStyle}>
-                                <Image style={styles.actionSheetMyntraIcone} source={imagePath.mmm} />
+                                <Image style={styles.actionSheetMyntraIcone} source={imagePath?.mmm} />
                                 <TouchableOpacity onPress={() => actionClose()}>
-                                    <Image style={styles.actionSheetCloseButtonStyle} source={imagePath.closeIconBlackCOlor} />
+                                    <Image style={styles.actionSheetCloseButtonStyle} source={imagePath?.closeIconBlackCOlor} />
                                 </TouchableOpacity>
                             </View>
-                            <Image />
+
                             <View style={styles.actionSheetLoginSignupView}>
                                 <Text style={styles.actionSheetLoginSignupTextSTyle}>{eng.LOGIN}</Text>
-                                <Text style={styles.actionSheetLoginSignupTextORSTyle}>{eng.OR}</Text>
+                                <Text style={styles.orTextSTyle}>{eng.OR}</Text>
                                 <Text style={styles.actionSheetLoginSignupTextSTyle}>{eng.SIGNUP}</Text>
                             </View>
                             <View>
                                 <TextInputWithLable
+                                movePlaceHolder={eng.MOBILENO}
+                                    countryCOde={eng.CODE}
+                                    placeholder={eng.MOBILENO}
                                     myTextShow={myTextShow}
                                     value={myTextShow}
+                                    
                                     onChangeText={text => setMyTextSHow(text)}
                                     keyboardType={"name-phone-pad"} />
                             </View>
                             <View style={styles.actionSheetBYContinueView}>
                                 <Text style={styles.actionSheetBYContinueTextSTyle}>{eng.BYCONTINUING}</Text>
-                                <Text style={{ ...styles.actionSheetTermsOfUseTextSTyle, }}>{eng.TERMSOFUSE}</Text>
-                                <Text style={{ ...styles.actionSheetBYContinueTextSTyle, marginLeft: 1 }}>{eng.and}</Text>
-                                <Text style={styles.actionSheetTermsOfUseTextSTyle}>{eng.PRIVACY}</Text>
+                                <Text style={{ ...styles.actionSheetTermsOfUseTextSTyle, }}> {eng.TERMSOFUSE}</Text>
+                                <Text style={{ ...styles.actionSheetBYContinueTextSTyle, marginLeft: 1 }}> {eng.and}</Text>
+                                <Text style={styles.actionSheetTermsOfUseTextSTyle}> {eng.PRIVACY}</Text>
                             </View>
                             <ButtonWithLabel
                                 btnBackgroundColor={color.profileButtonColor}
@@ -73,13 +77,13 @@ const Profile = () => {
                                 btnTextStyle={styles.logigSighnupTextStyle}
                                 buttonTextLabel={eng.CONTINUE} />
                             <View style={styles.actionSheetBYContinueView}>
-                                <Text>{eng.HAVINGTROUBLE}</Text>
-                                <Text style={{ ...styles.actionSheetTermsOfUseTextSTyle, marginTop: moderateScale(2) }}>{eng.GET}</Text>
+                                <Text style={styles.havingTroubleTextSTyle}>{eng.HAVINGTROUBLE}</Text>
+                                <Text style={{ ...styles.actionSheetTermsOfUseTextSTyle, }}> {eng.GET}</Text>
                             </View>
                         </ActionSheet>
                     </View>
                 </KeyboardAwareScrollView>
-            
+
             </View>
         </SafeAreaView>
     )

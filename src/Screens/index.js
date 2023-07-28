@@ -10,3 +10,4 @@ export {default as Baseket} from './Basetket/Baseket';
 export {default as Ordertocontinue} from './Ordetocontinue/Ordertocontinue';
 export {default as Detailitemscreen} from './Detailitemscreen/Detailitemscreen';
 export {default as Addproducts} from './Addproducts/Addproducts';
+export {default as Loginscreen} from './Loginscreen/Loginscreen';

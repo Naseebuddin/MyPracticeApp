@@ -1,4 +1,4 @@
-import React,{useState}from "react";
+import React, { useState } from "react";
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import { moderateScale, scale } from "react-native-size-matters";
 import eng from "../constants/lang/eng";
@@ -6,28 +6,39 @@ import imagePath from "../constants/imagePath";
 import color from "../styles/color";
 
 const TextInputWithLable = ({
- 
+
     keyboardType,
     myTextShow,
     onChangeText,
     value,
+    countryCOde,
+    movePlaceHolder,
+    placeholder,
+    secureTextEntry
 }) => {
-
-
     return (
         <View>
-            <View style={{...styles.labelContainer,backgroundColor: myTextShow ? color.white : null,}}>
-                <Text style={styles.label}>{myTextShow ? eng.MOBILENO : null}</Text>
+              {!!myTextShow &&
+            <View style={{ ...styles.labelContainer, backgroundColor: myTextShow ? color.white : null, }}>
+              
+                    <Text style={styles.label}>{myTextShow ? movePlaceHolder : null}</Text>
+              
             </View>
+              }
             <View style={{ ...styles.mainView }}>
-                <Text style={styles.textStyle}>{eng.CODE}</Text>
-                <TextInput 
-                
-                value={value}
-                onChangeText={onChangeText}
-                style={styles.TextInputStyle}
-                    keyboardType={keyboardType}
-                    placeholder={eng.MOBILENO} />
+                {!!countryCOde &&
+                    <Text style={styles.textStyle}>{countryCOde}</Text>
+                }
+                {!!
+                    { onChangeText, value, placeholder } &&
+                    <TextInput
+                    secureTextEntry={secureTextEntry}
+                        value={value}
+                        onChangeText={onChangeText}
+                        style={styles.TextInputStyle}
+                        keyboardType={keyboardType}
+                        placeholder={placeholder} />
+                }
             </View>
         </View>
     )
@@ -37,9 +48,9 @@ const styles = StyleSheet.create({
     mainView: {
         flexDirection: "row",
         borderWidth: moderateScale(0.25),
-        borderRadius: moderateScale(2),
+        borderRadius: moderateScale(4),
         marginHorizontal: moderateScale(15),
-        padding: moderateScale(15)
+        padding: moderateScale(0)
     },
     startIconeStye: {
         width: 7,
@@ -48,14 +59,16 @@ const styles = StyleSheet.create({
     },
     TextInputStyle: {
         marginLeft: moderateScale(8),
-        width: scale(260),
+        height:scale(40),
+        width:scale(310),
         paddingVertical: moderateScale(0),
         zIndex: 0,
     },
     textStyle: {
         fontSize: moderateScale(14),
         fontWeight: '200',
-        paddingVertical: moderateScale(0)
+        paddingVertical: moderateScale(10),
+        marginLeft:moderateScale(4)
     },
     label: {
 

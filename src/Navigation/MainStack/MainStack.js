@@ -8,6 +8,7 @@ const MainStack = (Stack) => {
             <Stack.Screen name={navigationStrig.ORDERTOCONTINUE} component={Ordertocontinue}/>
             <Stack.Screen name={navigationStrig.DETAILITEMSCREEN} component={Detailitemscreen}/>
               <Stack.Screen name={navigationStrig.ADDPRODUCTS} component={Addproducts}/>
+               <Stack.Screen name={navigationStrig.BASEKET} component={Baseket}/>
                 </>
     )
 }

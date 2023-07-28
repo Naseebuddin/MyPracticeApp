@@ -73,7 +73,7 @@ const styles = StyleSheet.create(
     {
         inputStyle: {
             borderRadius: moderateScale(5),
-            marginVertical: moderateScale(4),
+            marginVertical: verticalScale(4),
             padding: moderateScale(6),
             height: verticalScale(40),
             borderWidth: moderateScale(1),
