@@ -9,9 +9,8 @@ const stateChanging = createSlice ({
     reducers:{
         getLoginStatus:(state,action)=>{
             state.myStateStatus = action.payload;
-    
-           
-        }
+        },
+        
     }
 })
 export const {getLoginStatus} =stateChanging.actions;

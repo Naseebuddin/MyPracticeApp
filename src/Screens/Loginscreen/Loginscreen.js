@@ -29,20 +29,32 @@ const Loginscreen = () => {
         const sanitizedText = removeEmojis(text);
         setLoginUsername(sanitizedText)
     }
-    const hit_User_Login = () => {
+    const hit_User_Login = async () => {
         let loginData = {
             username: loginUsername,
             password: loginPassword,
         }
         console.log('loginData=================>', loginData)
-        actionsOfApis.postActionLoginUser(loginData).then((res) => {
+        actionsOfApis.postActionLoginUser(loginData)?.then(async (res) => {
             actions.appStateStatusAction(res)
             console.log(res, "Hello");
+            try {
+                await AsyncStorage.setItem('key', value)
+            } catch (e) {
+                // save error
+            }
         }).catch((error) => {
             console.log(error, "Hello error");
             console.log(error);
         })
     }
+    // const storeData = async (myStateStatus) => {
+    //     try {
+    //         await AsyncStorage.setItem('my-State-Value', myStateStatus);
+    //     } catch (e) {
+    //         // saving error
+    //     }
+    // };
 
     return (
         <View style={styles.mainView}>

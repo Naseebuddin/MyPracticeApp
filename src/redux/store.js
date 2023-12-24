@@ -11,7 +11,6 @@ const store = configureStore({
         cartItem:mycartItem,
         appStatus:stateChanging
     
-    
     },
 })
 export default store;

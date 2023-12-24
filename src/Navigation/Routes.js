@@ -8,17 +8,10 @@ const Routes = () => {
     const Stack = createNativeStackNavigator();
     var myStateStatus = useSelector((state) => state.appStatus.myStateStatus)
     console.log(myStateStatus, 'myStateStatusmyStateStatus');
-    const storeData = async (value) => {
-        try {
-          await AsyncStorage.setItem('my-State-Value', myStateStatus);
-        } catch (e) {
-          // saving error
-        }
-      };
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {myStateStatus ? MainStack(Stack) : AuthStack(Stack)}
+                {true ? MainStack(Stack) : AuthStack(Stack)}
             </Stack.Navigator>
         </NavigationContainer>
     )

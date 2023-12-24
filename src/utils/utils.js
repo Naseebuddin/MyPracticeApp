@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_AUTH_LOGIN_URL, API_DESCENDING_PRODUCTS_URL, API_ELECTRONIC_PRODUCTS_URL, API_JEWELERY_PRODUCTS_URL, API_LIMITS_PRODUCTS_URL, API_MANS_PRODUCTS_URL, API_PODUCTS_URL, API_SINGLE_PRODUCTS_URL, API_WOMENS_PRODUCTS_URL, Api_ADDNEW_PRODUCTS_URL, Api_LOGIN_USER_URL } from "../Config/Urls";
+import { getLoginStatus } from "../redux/reducer/stateChanging";
 const axiosApiRequset = (endpoint, method, header, data) => {
     return new Promise((resolve, reject) => {
         axios({
@@ -107,3 +108,27 @@ export const PostLoginApi = (data) => {
         });
     });
 };
+
+export const GetAsync = async key => {
+    let userData = await AsyncStorage.getItem(key);
+    let allData = await JSON.parse(userData);
+    if (allData) {
+      appLoginStateStatus (true);
+    }
+  };
+  export const AsyncSendData = async (key, value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem(key, jsonValue);
+    } catch (e) {
+      console.log('error occured', e);
+    }
+  };
+  export const AsyncRemoveData = async key => {
+    try {
+      await AsyncStorage.removeItem(key);
+      datasend(false);
+    } catch (e) {
+      console.log('error occured', e);
+    }
+  };

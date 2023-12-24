@@ -23,20 +23,9 @@ const clearMyAllCartItem = (state) => {
 const grandTotalOFAllItem = (state) => {
     dispatch(GrandTotal(state));
 }
-const appStateStatusAction = (state) =>{
+const appLoginStateStatus = (state) =>{
     dispatch(getLoginStatus(state))
 }
-
-
-//  const getProducts = () => {
-//     return new Promise((resolve, reject) => {
-//         axios.get(API_PODUCTS_URL).then((res) => {
-//             resolve(res)
-//         }).catch(err => {
-//             reject(err)
-//         })
-//     })
-// }
 
 export default {
     addMyActionUserData,
@@ -45,6 +34,6 @@ export default {
     clickTOAddItemTocart,
     clearMyAllCartItem,
     grandTotalOFAllItem,
-    appStateStatusAction,
-    // getProducts
+    appLoginStateStatus,
+   
 }

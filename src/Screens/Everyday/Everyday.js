@@ -30,7 +30,6 @@ const Everyday = ({ navigation }) => {
     const Get_Product_Of_ALL = async () => {
         await actionsOfApis.getActionsProductsApi().then((res) => {
             setApiAllProductData(res)
-          
 
         }).catch((error)=>{
             console.log(error);
@@ -337,7 +336,7 @@ const Everyday = ({ navigation }) => {
                     </View>
                 </TouchableOpacity>
             </View>
-        )
+        );
     }, [dataOfDealsOfTheDay]);
 
     const renderDataOfSelectItem = useCallback(({ item, index }) => {
